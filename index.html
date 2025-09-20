@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Problems Collection</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .main-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .problem-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .problem-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .problem-card:hover::before {
+            opacity: 1;
+        }
+
+        .problem-card:hover .card-content {
+            color: white;
+        }
+
+        .card-content {
+            position: relative;
+            z-index: 1;
+            transition: color 0.3s ease;
+        }
+
+        .problem-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+
+        .problem-icon {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .problem-title {
+            font-size: 1.4em;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 8px;
+            line-height: 1.3;
+        }
+
+        .problem-description {
+            color: #7f8c8d;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            font-size: 0.95em;
+        }
+
+        .problem-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .difficulty {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.8em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .difficulty.easy {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            color: white;
+        }
+
+        .difficulty.medium {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+
+        .difficulty.hard {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.1);
+            color: #667eea;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .problem-card:hover .tag {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .coming-soon {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .coming-soon::before {
+            background: linear-gradient(135deg, #95a5a6, #7f8c8d) !important;
+        }
+
+        .coming-soon-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(149, 165, 166, 0.1);
+            color: #95a5a6;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.75em;
+            font-weight: 600;
+        }
+
+        .stats {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9em;
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: 2em;
+            }
+            
+            .problems-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .problem-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="main-title">🚀 Programming Problems</h1>
+            <p class="subtitle">Master algorithms and data structures with detailed explanations</p>
+        </div>
+
+        <div class="problems-grid">
+            <!-- Existing Problem -->
+            <div class="problem-card" onclick="openDocument('palindromic-partitioning.html')">
+                <div class="card-content">
+                    <div class="problem-icon">🔄</div>
+                    <h3 class="problem-title">Palindromic Partitioning</h3>
+                    <p class="problem-description">
+                        Learn how to partition strings into palindromes using backtracking, dynamic programming, and memoization. Includes optimized solutions with detailed complexity analysis.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty medium">Medium</span>
+                        <div class="tags">
+                            <span class="tag">DP</span>
+                            <span class="tag">Backtracking</span>
+                            <span class="tag">Strings</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Placeholder Problems -->
+            <div class="problem-card coming-soon">
+                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="card-content">
+                    <div class="problem-icon">🌳</div>
+                    <h3 class="problem-title">Binary Tree Maximum Path</h3>
+                    <p class="problem-description">
+                        Find the maximum path sum in a binary tree. Covers tree traversal, recursive thinking, and optimization techniques for tree-based problems.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty hard">Hard</span>
+                        <div class="tags">
+                            <span class="tag">Trees</span>
+                            <span class="tag">Recursion</span>
+                            <span class="tag">DFS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card coming-soon">
+                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="card-content">
+                    <div class="problem-icon">🏠</div>
+                    <h3 class="problem-title">House Robber Series</h3>
+                    <p class="problem-description">
+                        Classic dynamic programming problem series. Learn how to solve linear, circular, and tree-based house robber variants with space optimization.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty medium">Medium</span>
+                        <div class="tags">
+                            <span class="tag">DP</span>
+                            <span class="tag">Arrays</span>
+                            <span class="tag">Optimization</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card coming-soon">
+                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="card-content">
+                    <div class="problem-icon">🎯</div>
+                    <h3 class="problem-title">Two Pointers Technique</h3>
+                    <p class="problem-description">
+                        Master the two pointers approach for array and string problems. Covers sum problems, palindromes, and sliding window variations.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty easy">Easy</span>
+                        <div class="tags">
+                            <span class="tag">Two Pointers</span>
+                            <span class="tag">Arrays</span>
+                            <span class="tag">Technique</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card coming-soon">
+                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="card-content">
+                    <div class="problem-icon">🔍</div>
+                    <h3 class="problem-title">Binary Search Patterns</h3>
+                    <p class="problem-description">
+                        Deep dive into binary search variations. From basic search to complex problems like finding peak elements and search in rotated arrays.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty medium">Medium</span>
+                        <div class="tags">
+                            <span class="tag">Binary Search</span>
+                            <span class="tag">Arrays</span>
+                            <span class="tag">Logarithmic</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="problem-card coming-soon">
+                <div class="coming-soon-badge">Coming Soon</div>
+                <div class="card-content">
+                    <div class="problem-icon">🌊</div>
+                    <h3 class="problem-title">Graph Algorithms</h3>
+                    <p class="problem-description">
+                        Essential graph traversal and shortest path algorithms. Covers BFS, DFS, Dijkstra's algorithm, and Union-Find with practical examples.
+                    </p>
+                    <div class="problem-meta">
+                        <span class="difficulty hard">Hard</span>
+                        <div class="tags">
+                            <span class="tag">Graphs</span>
+                            <span class="tag">BFS</span>
+                            <span class="tag">DFS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">1</div>
+                    <div class="stat-label">Available</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">5</div>
+                    <div class="stat-label">Coming Soon</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Languages</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Learning</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openDocument(filename) {
+            window.open(filename, '_blank');
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.problem-card:not(.coming-soon)');
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+
+            // Add click feedback
+            cards.forEach(card => {
+                card.addEventListener('mousedown', function() {
+                    this.style.transform = 'translateY(-4px) scale(0.98)';
+                });
+                
+                card.addEventListener('mouseup', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

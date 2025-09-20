@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Palindromic Partitioning Problem</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            color: #333;
+        }
+
+        h1 {
+            color: #2c3e50;
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+
+        h2 {
+            color: #34495e;
+            font-size: 1.8em;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            border-left: 5px solid #3498db;
+            padding-left: 15px;
+        }
+
+        h3 {
+            color: #2980b9;
+            font-size: 1.4em;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+
+        h4 {
+            color: #27ae60;
+            font-size: 1.2em;
+            margin-top: 25px;
+            margin-bottom: 12px;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+
+        .tags {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+        }
+
+        .tag {
+            display: inline-block;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            margin: 3px;
+            font-size: 0.85em;
+            font-weight: 500;
+        }
+
+        .code-block {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            border-left: 4px solid #007acc;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            tab-size: 4;
+        }
+        
+        .code-block .keyword { color: #569cd6; }
+        .code-block .string { color: #ce9178; }
+        .code-block .comment { color: #6a9955; font-style: italic; }
+        .code-block .number { color: #b5cea8; }
+        .code-block .operator { color: #d4d4d4; }
+        .code-block .function { color: #dcdcaa; }
+        .code-block .type { color: #4ec9b0; }
+
+        .inline-code {
+            background-color: #f8f9fa;
+            color: #e74c3c;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid #e9ecef;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #28a745;
+        }
+
+        .visual-diagram {
+            background: linear-gradient(135deg, #fff5f5, #fed7f7);
+            border: 1px solid #fbb6ce;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            border-left: 5px solid #e53e3e;
+        }
+
+        .complexity-box {
+            background: linear-gradient(135deg, #e8f5e8, #c6f6c6);
+            border: 1px solid #9ae6b4;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            border-left: 5px solid #38a169;
+        }
+
+        .algorithm-steps {
+            background-color: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #805ad5;
+        }
+
+        .algorithm-steps ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .algorithm-steps li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .note-box {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border: 1px solid #ffcc02;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #ff9800;
+        }
+
+        .application-item {
+            background-color: #f8f9ff;
+            border: 1px solid #e6e9ff;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            border-left: 4px solid #667eea;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, #e8f4fd, #bee3f8);
+            border: 1px solid #90cdf4;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 5px solid #3182ce;
+        }
+
+        .checkmark {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        .crossmark {
+            color: #dc3545;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .language-label {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            margin-bottom: 0;
+            display: inline-block;
+            font-size: 0.9em;
+        }
+
+        strong {
+            color: #2c3e50;
+        }
+
+        em {
+            color: #7f8c8d;
+            font-style: italic;
+        }
+
+        ul, ol {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .tree-diagram {
+            font-family: monospace;
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #7dd3fc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+            white-space: pre;
+            overflow-x: auto;
+            border-left: 5px solid #0284c7;
+        }
+    </style>
+</head>
+<body>
+    <h1>Palindromic Partitioning Problem</h1>
+
+    <h2>Difficulty</h2>
+    <div class="difficulty-badge">Medium</div>
+
+    <h2>Tags</h2>
+    <div class="tags">
+        <span class="tag">Dynamic Programming</span>
+        <span class="tag">Backtracking</span>
+        <span class="tag">String</span>
+        <span class="tag">Recursion</span>
+        <span class="tag">Matrix Chain Multiplication Pattern</span>
+    </div>
+
+    <h2>Problem Statement</h2>
+    <p>Given a string <code class="inline-code">s</code>, we need to partition (cut) the string such that every substring of the partition is a palindrome. We need to return all possible palindrome partitionings of the string.</p>
+
+    <p><strong>What is a palindrome?</strong><br>
+    A palindrome is a word that reads the same forward and backward. Examples: "aba", "racecar", "noon", "a"</p>
+
+    <p><strong>What is partitioning?</strong><br>
+    Partitioning means dividing the string into smaller parts. For example, "aab" can be partitioned as ["a", "a", "b"] or ["aa", "b"].</p>
+
+    <h2>Examples</h2>
+
+    <div class="example-box">
+        <h3>Example 1:</h3>
+        <div class="code-block">Input: s = "aab"
+Output: [["a","a","b"], ["aa","b"]]
+
+Explanation:
+- First partition: "a" | "a" | "b" (all are palindromes ✓)
+- Second partition: "aa" | "b" (both are palindromes ✓)</div>
+    </div>
+
+    <div class="example-box">
+        <h3>Example 2:</h3>
+        <div class="code-block">Input: s = "a"
+Output: [["a"]]
+
+Explanation: Single character is always a palindrome</div>
+    </div>
+
+    <div class="example-box">
+        <h3>Example 3:</h3>
+        <div class="code-block">Input: s = "aaaa"
+Output: [["a","a","a","a"], ["a","a","aa"], ["a","aa","a"], 
+         ["aa","a","a"], ["aa","aa"], ["a","aaa"], ["aaa","a"], ["aaaa"]]</div>
+    </div>
+
+    <h2>Visual Understanding</h2>
+    <p>Let's visualize how we partition the string "aab":</p>
+
+    <div class="visual-diagram">Original String: "aab"
+
+Decision Tree:
+                    "aab"
+                   /  |  \
+                  /   |   \
+            "a"|"ab" "aa"|"b" "aab"
+               ❌       ✓       ❌
+           (ab not    (both    (aab not
+           palindrome) palindromes) palindrome)
+                        |
+                    Solution: ["aa","b"]
+                    
+For "a"|"ab" branch (continuing):
+            "a"|"ab"
+               |
+            "a"|"a"|"b"
+               ✓
+         Solution: ["a","a","b"]</div>
+
+    <h2>Solution Approaches</h2>
+
+    <h3>Approach 1: Naive Recursive Solution</h3>
+
+    <h4>Intuition</h4>
+    <p>Try all possible ways to partition the string. For each partition, check if all substrings are palindromes. If yes, add to result.</p>
+
+    <h4>Approach</h4>
+    <div class="algorithm-steps">
+        <ol>
+            <li>Start from index 0</li>
+            <li>Try to make partitions of different lengths (1 character, 2 characters, etc.)</li>
+            <li>For each partition, check if it's a palindrome</li>
+            <li>If yes, recursively partition the remaining string</li>
+            <li>Collect all valid partitions</li>
+        </ol>
+    </div>
+
+    <h4>Visual Diagram</h4>
+    <div class="tree-diagram">For string "aab":
+
+Step 1: Try partition at position 1
+        "a" | "ab"
+         ✓     ?
+        
+Step 2: Check "ab" recursively
+        "a" | "a" | "b"
+         ✓     ✓     ✓
+        Result: ["a", "a", "b"]
+
+Step 3: Try partition at position 2
+        "aa" | "b"
+         ✓      ✓
+        Result: ["aa", "b"]</div>
+
+    <h4>Code Implementation</h4>
+
+    <div class="language-label">C++</div>
+    <div class="code-block">// C++ Implementation - Naive Approach
+class Solution {
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {
+        vector&lt;vector&lt;string&gt;&gt; result;
+        vector&lt;string&gt; currentPartition;
+        
+        // Start the recursive partitioning
+        backtrack(s, 0, currentPartition, result);
+        return result;
+    }
+    
+private:
+    void backtrack(string&amp; s, int start, vector&lt;string&gt;&amp; currentPartition, 
+                   vector&lt;vector&lt;string&gt;&gt;&amp; result) {
+        // Base case: if we've processed entire string
+        if (start &gt;= s.length()) {
+            result.push_back(currentPartition);
+            return;
+        }
+        
+        // Try all possible partitions starting from 'start'
+        for (int end = start; end &lt; s.length(); end++) {
+            // Extract substring from start to end
+            string substring = s.substr(start, end - start + 1);
+            
+            // Check if current substring is palindrome
+            if (isPalindrome(substring)) {
+                // Add to current partition
+                currentPartition.push_back(substring);
+                
+                // Recursively partition remaining string
+                backtrack(s, end + 1, currentPartition, result);
+                
+                // Backtrack - remove the last added substring
+                currentPartition.pop_back();
+            }
+        }
+    }
+    
+    bool isPalindrome(string&amp; str) {
+        int left = 0, right = str.length() - 1;
+        
+        // Check characters from both ends
+        while (left &lt; right) {
+            if (str[left] != str[right]) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+};</div>
+
+    <div class="language-label">Java</div>
+    <div class="code-block">// Java Implementation - Naive Approach
+import java.util.*;
+
+class Solution {
+    public List&lt;List&lt;String&gt;&gt; partition(String s) {
+        List&lt;List&lt;String&gt;&gt; result = new ArrayList&lt;&gt;();
+        List&lt;String&gt; currentPartition = new ArrayList&lt;&gt;();
+        
+        // Start recursive partitioning
+        backtrack(s, 0, currentPartition, result);
+        return result;
+    }
+    
+    private void backtrack(String s, int start, List&lt;String&gt; currentPartition, 
+                          List&lt;List&lt;String&gt;&gt; result) {
+        // Base case: processed entire string
+        if (start &gt;= s.length()) {
+            result.add(new ArrayList&lt;&gt;(currentPartition));
+            return;
+        }
+        
+        // Try all possible partitions from 'start'
+        for (int end = start; end &lt; s.length(); end++) {
+            // Extract substring
+            String substring = s.substring(start, end + 1);
+            
+            // Check if palindrome
+            if (isPalindrome(substring)) {
+                // Add to current partition
+                currentPartition.add(substring);
+                
+                // Recursively process remaining
+                backtrack(s, end + 1, currentPartition, result);
+                
+                // Backtrack - remove last added
+                currentPartition.remove(currentPartition.size() - 1);
+            }
+        }
+    }
+    
+    private boolean isPalindrome(String str) {
+        int left = 0, right = str.length() - 1;
+        
+        // Check from both ends
+        while (left &lt; right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
+        return true;
+    }
+}</div>
+
+    <div class="language-label">Python</div>
+    <div class="code-block"># Python Implementation - Naive Approach
+class Solution:
+    def partition(self, s: str) -&gt; List[List[str]]:
+        result = []
+        current_partition = []
+        
+        # Start recursive partitioning
+        self.backtrack(s, 0, current_partition, result)
+        return result
+    
+    def backtrack(self, s, start, current_partition, result):
+        # Base case: processed entire string
+        if start &gt;= len(s):
+            result.append(current_partition[:])  # Add copy of current partition
+            return
+        
+        # Try all possible partitions from 'start'
+        for end in range(start, len(s)):
+            # Extract substring
+            substring = s[start:end + 1]
+            
+            # Check if palindrome
+            if self.is_palindrome(substring):
+                # Add to current partition
+                current_partition.append(substring)
+                
+                # Recursively process remaining
+                self.backtrack(s, end + 1, current_partition, result)
+                
+                # Backtrack - remove last added
+                current_partition.pop()
+    
+    def is_palindrome(self, string):
+        # Check from both ends
+        left, right = 0, len(string) - 1
+        
+        while left &lt; right:
+            if string[left] != string[right]:
+                return False
+            left += 1
+            right -= 1
+        
+        return True</div>
+
+    <div class="complexity-box">
+        <h4>Time Complexity: O(n * 2^n)</h4>
+        <p>In worst case, we have 2^n possible partitions (at each position, we can either cut or not cut). For each partition, we check if it's palindrome which takes O(n)</p>
+        
+        <h4>Space Complexity: O(n)</h4>
+        <p>Recursion stack can go up to depth n. Current partition array can have at most n elements (all single characters)</p>
+    </div>
+
+    <h3>Approach 2: Optimized with DP (Dynamic Programming)</h3>
+
+    <h4>Intuition</h4>
+    <p>Instead of checking palindrome for same substring multiple times, we can precompute and store which substrings are palindromes using a 2D DP table.</p>
+
+    <h4>Approach</h4>
+    <div class="algorithm-steps">
+        <ol>
+            <li>Build a DP table where dp[i][j] = true if s[i...j] is palindrome</li>
+            <li>Use this table in our backtracking to avoid redundant palindrome checks</li>
+        </ol>
+    </div>
+
+    <h4>Visual Diagram of DP Table</h4>
+    <div class="tree-diagram">For string "aab":
+
+DP Table (is palindrome?):
+    0   1   2
+  +---+---+---+
+0 | T | F | F |  (a, aa, aab)
+  +---+---+---+
+1 |   | T | F |  (a, ab)
+  +---+---+---+
+2 |   |   | T |  (b)
+  +---+---+---+
+
+T = True (palindrome), F = False (not palindrome)
+
+How to read: dp[0][1] = Is "aa" palindrome? = True
+            dp[1][2] = Is "ab" palindrome? = False</div>
+
+    <h4>Code Implementation</h4>
+
+    <div class="language-label">C++</div>
+    <div class="code-block">// C++ Implementation - Optimized with DP
+class Solution {
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {
+        int n = s.length();
+        
+        // DP table: dp[i][j] = true if s[i...j] is palindrome
+        vector&lt;vector&lt;bool&gt;&gt; dp(n, vector&lt;bool&gt;(n, false));
+        
+        // Build DP table
+        buildPalindromeDP(s, dp);
+        
+        // Find all partitions
+        vector&lt;vector&lt;string&gt;&gt; result;
+        vector&lt;string&gt; currentPartition;
+        backtrack(s, 0, currentPartition, result, dp);
+        
+        return result;
+    }
+    
+private:
+    void buildPalindromeDP(string&amp; s, vector&lt;vector&lt;bool&gt;&gt;&amp; dp) {
+        int n = s.length();
+        
+        // Every single character is palindrome
+        for (int i = 0; i &lt; n; i++) {
+            dp[i][i] = true;
+        }
+        
+        // Check for 2-character palindromes
+        for (int i = 0; i &lt; n - 1; i++) {
+            if (s[i] == s[i + 1]) {
+                dp[i][i + 1] = true;
+            }
+        }
+        
+        // Check for palindromes of length 3 and more
+        for (int length = 3; length &lt;= n; length++) {
+            for (int i = 0; i &lt;= n - length; i++) {
+                int j = i + length - 1;
+                
+                // Check if s[i...j] is palindrome
+                // It's palindrome if s[i] == s[j] AND s[i+1...j-1] is palindrome
+                if (s[i] == s[j] &amp;&amp; dp[i + 1][j - 1]) {
+                    dp[i][j] = true;
+                }
+            }
+        }
+    }
+    
+    void backtrack(string&amp; s, int start, vector&lt;string&gt;&amp; currentPartition,
+                   vector&lt;vector&lt;string&gt;&gt;&amp; result, vector&lt;vector&lt;bool&gt;&gt;&amp; dp) {
+        // Base case: processed entire string
+        if (start &gt;= s.length()) {
+            result.push_back(currentPartition);
+            return;
+        }
+        
+        // Try all partitions
+        for (int end = start; end &lt; s.length(); end++) {
+            // Use DP table instead of checking palindrome
+            if (dp[start][end]) {
+                // Extract substring
+                string substring = s.substr(start, end - start + 1);
+                currentPartition.push_back(substring);
+                
+                // Recursive call
+                backtrack(s, end + 1, currentPartition, result, dp);
+                
+                // Backtrack
+                currentPartition.pop_back();
+            }
+        }
+    }
+};</div>
+
+    <div class="complexity-box">
+        <h4>Time Complexity: O(n^2 + n * 2^n)</h4>
+        <p>Building DP table takes O(n^2). Backtracking still takes O(n * 2^n) in worst case, but palindrome check is now O(1)</p>
+        
+        <h4>Space Complexity: O(n^2)</h4>
+        <p>DP table requires O(n^2) space. Recursion stack and current partition still take O(n)</p>
+    </div>
+
+    <h3>Approach 3: Most Optimal - DP + Memoization</h3>
+
+    <h4>Intuition</h4>
+    <p>We can further optimize by memoizing the results of subproblems. If we've already computed all palindrome partitions for a substring, we can reuse that result.</p>
+
+    <h4>Approach</h4>
+    <p>Instead of recalculating partitions for the same starting position multiple times, we store (memoize) the results and reuse them.</p>
+
+    <h4>Visual Diagram - Memoization in Action</h4>
+    <div class="tree-diagram">String: "aab"
+
+Without Memoization (Redundant Calculations):
+                    partition(0)
+                   /            \
+            "a"|partition(1)    "aa"|partition(2)
+                    |                    |
+            "a"|partition(2)         "b"|partition(3)
+                    |                    |
+                "b"|partition(3)        return [[]]
+                    |
+                return [[]]
+
+Notice: partition(2) is calculated TWICE!
+
+With Memoization:
+Step 1: partition(0) - Not in memo, calculate
+Step 2: partition(1) - Not in memo, calculate  
+Step 3: partition(2) - Not in memo, calculate and STORE in memo
+        memo[2] = [["b"]]
+Step 4: When we need partition(2) again, just return memo[2]!
+
+Memo Table Evolution:
+Initial: memo = {}
+After partition(3): memo = {3: [[]]}
+After partition(2): memo = {3: [[]], 2: [["b"]]}
+After partition(1): memo = {3: [[]], 2: [["b"]], 1: [["a","b"], ["ab"]]}
+After partition(0): memo = {3: [[]], 2: [["b"]], 1: [["a","b"]], 0: [["a","a","b"], ["aa","b"]]}</div>
+
+    <h4>Memoization Table Example</h4>
+    <table>
+        <thead>
+            <tr>
+                <th>Start</th>
+                <th>All Partitions from Start</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>3</td>
+                <td>[[]] ← Base case: empty</td>
+            </tr>
+            <tr>
+                <td>2</td>
+                <td>[["b"]] ← Only "b" possible</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>[["a","b"], ["ab"]] ← Two ways from index 1</td>
+            </tr>
+            <tr>
+                <td>0</td>
+                <td>[["a","a","b"], ["aa","b"]] ← All partitions from start</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="language-label">C++</div>
+    <div class="code-block">// C++ Implementation - Most Optimal with Memoization
+class Solution {
+private:
+    // Memoization map: key = start index, value = all partitions from that index
+    unordered_map&lt;int, vector&lt;vector&lt;string&gt;&gt;&gt; memo;
+    vector&lt;vector&lt;bool&gt;&gt; dp;
+    
+public:
+    vector&lt;vector&lt;string&gt;&gt; partition(string s) {
+        int n = s.length();
+        dp.resize(n, vector&lt;bool&gt;(n, false));
+        
+        // Build palindrome DP table
+        buildPalindromeDP(s);
+        
+        // Get all partitions starting from index 0
+        return partitionHelper(s, 0);
+    }
+    
+private:
+    void buildPalindromeDP(string&amp; s) {
+        int n = s.length();
+        
+        // Single characters
+        for (int i = 0; i &lt; n; i++) {
+            dp[i][i] = true;
+        }
+        
+        // Two characters
+        for (int i = 0; i &lt; n - 1; i++) {
+            if (s[i] == s[i + 1]) {
+                dp[i][i + 1] = true;
+            }
+        }
+        
+        // Three or more characters
+        for (int len = 3; len &lt;= n; len++) {
+            for (int i = 0; i &lt;= n - len; i++) {
+                int j = i + len - 1;
+                if (s[i] == s[j] &amp;&amp; dp[i + 1][j - 1]) {
+                    dp[i][j] = true;
+                }
+            }
+        }
+    }
+    
+    vector&lt;vector&lt;string&gt;&gt; partitionHelper(string&amp; s, int start) {
+        // Check if already computed
+        if (memo.find(start) != memo.end()) {
+            return memo[start];
+        }
+        
+        vector&lt;vector&lt;string&gt;&gt; result;
+        
+        // Base case: reached end of string
+        if (start &gt;= s.length()) {
+            result.push_back({});
+            return result;
+        }
+        
+        // Try all possible first partitions
+        for (int end = start; end &lt; s.length(); end++) {
+            if (dp[start][end]) {
+                // Current substring is palindrome
+                string currentPalindrome = s.substr(start, end - start + 1);
+                
+                // Get all partitions for remaining string
+                vector&lt;vector&lt;string&gt;&gt; remainingPartitions = partitionHelper(s, end + 1);
+                
+                // Combine current with remaining
+                for (auto&amp; partition : remainingPartitions) {
+                    vector&lt;string&gt; newPartition;
+                    newPartition.push_back(currentPalindrome);
+                    newPartition.insert(newPartition.end(), partition.begin(), partition.end());
+                    result.push_back(newPartition);
+                }
+            }
+        }
+        
+        // Memoize result
+        memo[start] = result;
+        return result;
+    }
+};</div>
+
+    <div class="complexity-box">
+        <h4>Time Complexity: O(n^2 + n * 2^n)</h4>
+        <p>DP table construction: O(n^2). With memoization, each subproblem is solved only once. Total unique subproblems: n (one for each starting position)</p>
+        
+        <h4>Space Complexity: O(n^2 + n * 2^n)</h4>
+        <p>DP table: O(n^2). Memoization can store up to 2^n partitions in worst case. Recursion stack: O(n)</p>
+    </div>
+
+    <h2>Real-World Applications</h2>
+    <div class="note-box">
+        <p>This problem has several practical applications:</p>
+    </div>
+
+    <div class="application-item">
+        <h4>1. Natural Language Processing (NLP)</h4>
+        <p>Text segmentation in languages without spaces (Chinese, Japanese). Finding meaningful word boundaries in continuous text</p>
+    </div>
+
+    <div class="application-item">
+        <h4>2. DNA Sequence Analysis</h4>
+        <p>Identifying palindromic sequences in DNA (important for gene regulation). Finding restriction enzyme cut sites</p>
+    </div>
+
+    <div class="application-item">
+        <h4>3. Data Compression</h4>
+        <p>Palindromic patterns can be compressed more efficiently. Used in some string compression algorithms</p>
+    </div>
+
+    <div class="application-item">
+        <h4>4. Cryptography</h4>
+        <p>Palindromic structures in encryption keys. Pattern analysis in encrypted messages</p>
+    </div>
+
+    <div class="application-item">
+        <h4>5. Compiler Design</h4>
+        <p>Token parsing and lexical analysis. Breaking source code into meaningful tokens</p>
+    </div>
+
+    <div class="application-item">
+        <h4>6. URL/Path Parsing</h4>
+        <p>Breaking URLs into meaningful segments. File path analysis in operating systems</p>
+    </div>
+
+    <h2>Summary</h2>
+    <div class="summary-box">
+        <p>The Palindromic Partitioning problem teaches us:</p>
+        <ol>
+            <li><strong>Backtracking</strong> - How to explore all possible solutions</li>
+            <li><strong>Dynamic Programming</strong> - How to optimize repeated calculations</li>
+            <li><strong>Memoization</strong> - How to cache results for better performance</li>
+            <li><strong>String Manipulation</strong> - Working with substrings efficiently</li>
+        </ol>
+
+        <p>The key insight is that we can break down the problem into smaller subproblems and use DP to avoid redundant palindrome checks. This pattern appears in many string-based problems and is worth mastering for coding interviews and real applications.</p>
+    </div>
+
+</body>
+</html>
